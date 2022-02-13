@@ -1,0 +1,520 @@
+
+var blackStonesIds = new Array(12);
+var whiteStonesIds = new Array(12);
+
+var positions = new Array(64);
+var number = ["1", "2", "3", "4", "5", "6", "7", "8"];
+var chars = ["a", "b", "c", "d", "e", "f", "g", "h"];
+var x = 0;
+
+var selectedItems = new Array();
+
+// Positions Ids
+for(let i = 0; i < chars.length; i ++){
+    for(let j = 1; j <= 8; j ++){
+        positions[x] = chars[i] + j;
+        x++;
+    }
+    if (x == 64){
+        break;
+    }
+}
+
+// Stones Ids
+for(let i = 0; i < 16; i ++){
+    blackStonesIds[i] = "s" + (i + 1);
+    whiteStonesIds[i] = "w" + (i + 1);
+}
+
+// start function   white b-c  black g-f
+function startPosition() {
+    for(let i = 0; i < 16; i ++){
+        document.getElementById(positions[40 + i]).innerHTML = 
+        "<div class=black-stones" + " id=" + blackStonesIds[i] + "></div>";
+
+        document.getElementById(positions[8 + i]).innerHTML = 
+        "<div class=white-stones" + " id=" + whiteStonesIds[i] + "></div>";
+    }
+}
+startPosition();
+
+// stone add function
+function addStone(stoneId, targetPos) {
+    if(stoneId[0] == 's') {
+        document.getElementById(targetPos).innerHTML =
+        "<div class=black-stones" + " id=" + stoneId + "></div>";
+    }
+    else {
+        document.getElementById(targetPos).innerHTML =
+        "<div class=white-stones" + " id=" + stoneId + "></div>";
+    }
+}
+
+// joker stones function
+function jokerStone(stoneId) {
+    let stonePos = document.getElementById(stoneId).parentElement.id;
+
+    if(stoneId[0] == 's' && stonePos[0] == 'a') {
+        console.log("bu taş joker" + stoneId);
+        document.getElementById(stoneId).innerHTML =
+        "<div id=" + stoneId + "j ></div>";
+    }
+    else if(stoneId[0] == 'w' && stonePos[0] == 'h') {
+        console.log("bu taş joker" + stoneId)
+        document.getElementById(stoneId).innerHTML =
+        "<div id=" + stoneId + "j ></div>";
+    }
+    else {
+        console.log("there is no joker");
+    }
+    console.log(document.getElementById(stoneId).children);
+}
+
+// joker stones move function
+function jokerStoneMove(stoneId, targetPos) {
+    let stonePos = document.getElementById(stoneId).parentElement.id;
+    let targetId = document.getElementById(targetPos).id;
+    let index = null;
+    let firstStop = null;
+    
+    // forward
+    if((targetId[0] != stonePos[0]) && (targetId[1] == stonePos[1])) {
+
+        // white stones
+        if(stoneId[0] == 'w') {
+            for(let i = chars.indexOf(stonePos[0]) + 1; i <= chars.indexOf(targetPos[0]); i ++) {
+                
+                if(document.getElementById(chars[i] + targetPos[1]).children.length == 0) {
+                   // console.log("oynar " + document.getElementById(chars[i] + targetPos[1]).id);
+                }
+                else {
+                    firstStop = document.getElementById(chars[i] + targetPos[1]).id;
+                    index = chars.indexOf(firstStop[0]);
+                    break;
+                }
+            }
+            if(document.getElementById(chars[index + 1] + firstStop[1]).children.length == 1) {
+                console.log("oynamaz");
+            }
+            else {
+                deleteStonePos(firstStop);
+                deleteStone(stoneId);
+                addStone(stoneId, targetPos);
+            }
+        }
+
+        // black stones
+        if(stoneId[0] == 's') {
+            for(let i = chars.indexOf(stonePos[0]) - 1; i >= chars.indexOf(targetPos[0]); i --) {
+                
+                if(document.getElementById(chars[i] + targetPos[1]).children.length == 0) {
+                   // console.log("oynar " + document.getElementById(chars[i] + targetPos[1]).id);
+                }
+                else {
+                    firstStop = document.getElementById(chars[i] + targetPos[1]).id;
+                    index = chars.indexOf(firstStop[0]);
+                    break;
+                }
+            }
+            if(document.getElementById(chars[index - 1] + firstStop[1]).children.length == 1) {
+                console.log("oynamaz");
+            }
+            else {
+                deleteStonePos(firstStop);
+                deleteStone(stoneId);
+                addStone(stoneId, targetPos);
+            }
+        }
+    }
+    // left side
+    else if((targetId[0] == stonePos[0]) && (targetId[1] != stonePos[1]) && (targetPos[1] < stonePos[1])) {
+
+        // black stones
+        if(stoneId[0] == 's') {
+            for(let i = number.indexOf(stonePos[1]) - 1; i >= number.indexOf(targetPos[1]); i --) {
+
+                if(document.getElementById(stonePos[0] + number[i]).children.length == 0) {
+                    console.log("oynar " + document.getElementById(stonePos[0] + number[i]).id);
+                }
+                else {
+                    firstStop = document.getElementById(targetPos[0] + number[i]).id;
+                    index = number.indexOf(firstStop[1]);
+                    break;
+                }
+            }
+            if(document.getElementById(firstStop[0] + number[index - 1]).children.length == 1 || document.getElementById(firstStop).children[0].id[0] == 's') {
+                console.log("oynamaz");
+            }
+            else {
+                deleteStonePos(firstStop);
+                deleteStone(stoneId);
+                addStone(stoneId, targetPos);
+            }
+        }
+
+        // white stones
+        if(stoneId[0] == 'w') {
+            for(let i = number.indexOf(stonePos[1]) - 1; i >= number.indexOf(targetPos[1]); i --) {
+
+                if(document.getElementById(stonePos[0] + number[i]).children.length == 0) {
+                    console.log("oynar " + document.getElementById(stonePos[0] + number[i]).id);
+                }
+                else {
+                    firstStop = document.getElementById(targetPos[0] + number[i]).id;
+                    index = number.indexOf(firstStop[1]);
+                    break;
+                }
+            }
+            if(document.getElementById(firstStop[0] + number[index - 1]).children.length == 1 || document.getElementById(firstStop).children[0].id[0] == 'w') {
+                console.log("oynamaz");
+            }
+            else {
+                deleteStonePos(firstStop);
+                deleteStone(stoneId);
+                addStone(stoneId, targetPos);
+            }
+        }
+    }
+
+    // right side
+    else if((targetId[0] == stonePos[0]) && (targetId[1] != stonePos[1]) && (targetPos[1] > stonePos[1])) {
+
+        // black stones
+        if(stoneId[0] == 's') {
+            for(let i = number.indexOf(stonePos[1]) + 1; i <= number.indexOf(targetPos[1]); i ++) {
+
+                if(document.getElementById(stonePos[0] + number[i]).children.length == 0) {
+                    console.log("oynar " + document.getElementById(stonePos[0] + number[i]).id);
+                }
+                else {
+                    firstStop = document.getElementById(targetPos[0] + number[i]).id;
+                    index = number.indexOf(firstStop[1]);
+                    break;
+                }
+            }
+            if(document.getElementById(firstStop[0] + number[index + 1]).children.length == 1 || document.getElementById(firstStop).children[0].id[0] == 's') {
+                console.log("oynamaz");
+            }
+            else {
+                deleteStonePos(firstStop);
+                deleteStone(stoneId);
+                addStone(stoneId, targetPos);
+            }
+        }
+
+        // white stones
+        if(stoneId[0] == 'w') {
+            for(let i = number.indexOf(stonePos[1]) + 1; i <= number.indexOf(targetPos[1]); i ++) {
+                
+                if(document.getElementById(stonePos[0] + number[i]).children.length == 0) {
+                    console.log("oynar " + document.getElementById(stonePos[0] + number[i]).id);
+                }
+                else {
+                    firstStop = document.getElementById(targetPos[0] + number[i]).id;
+                    index = number.indexOf(firstStop[1]);
+                    break;
+                }
+            }
+            if(document.getElementById(firstStop[0] + number[index + 1]).children.length == 1 || document.getElementById(firstStop).children[0].id[0] == 'w') {
+                console.log("oynamaz");
+            }
+            else {
+                deleteStonePos(firstStop);
+                deleteStone(stoneId);
+                addStone(stoneId, targetPos);
+                
+            }
+        }
+    }
+}
+
+// stone delete function
+function deleteStone(stoneId) {
+    let el = document.getElementById(stoneId);
+    el.parentNode.removeChild(el);
+}
+
+// delete stone from positions function
+function deleteStonePos(stonePos) {
+    let el = document.getElementById(stonePos).children[0].id;
+    let stone = document.getElementById(el);
+    stone.remove();
+}
+
+// stone parent index in position Array
+function findIndex(stoneId) {
+    let posId =  document.getElementById(stoneId).parentElement.id;
+    return positions.indexOf(posId);
+}
+
+// stone eat function
+function eatStone(stoneId, currentPos, targetPos) {
+    let posLenght = Math.abs(chars.indexOf(currentPos[0]) - chars.indexOf(targetPos[0]));
+    let indexLenght = positions.indexOf(targetPos) - positions.indexOf(currentPos);
+    let targetStone;
+    let targetStoneColor;
+    // forward white stones
+    if(stoneId[0] == 'w' && (posLenght == 2 || posLenght == 0) && indexLenght == 16 && targetStone != 0) {
+        targetStoneColor = document.getElementById(positions[positions.indexOf(currentPos) + 8]).children[0].id[0];
+        targetStone = document.getElementById(positions[positions.indexOf(currentPos) + 8]).children.length;
+
+        if(targetStoneColor != 'w') {
+            deleteStone(document.getElementById(positions[positions.indexOf(currentPos) + 8]).children[0].id);
+            deleteStonePos(document.getElementById(positions[positions.indexOf(currentPos)]).id);
+            addStone(stoneId, targetPos);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    // forward black stones
+    else if(stoneId[0] == 's' && (posLenght == 2 || posLenght == 0) && indexLenght == - 16 && targetStone != 0)   {
+        targetStoneColor = document.getElementById(positions[positions.indexOf(currentPos) - 8]).children[0].id[0];
+        targetStone = document.getElementById(positions[positions.indexOf(currentPos) - 8]).children.length;
+
+        if(targetStoneColor != 's') {
+            deleteStone(document.getElementById(positions[positions.indexOf(currentPos) - 8]).children[0].id);
+            deleteStonePos(document.getElementById(positions[positions.indexOf(currentPos)]).id);
+            addStone(stoneId, targetPos);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    // left side black
+    else if(stoneId[0] == 's' && (posLenght == 2 || posLenght == 0) && indexLenght == -2 && targetStone != 0) {
+        targetStoneColor = document.getElementById(positions[positions.indexOf(currentPos) - 1]).children[0].id[0];
+        targetStone = document.getElementById(positions[positions.indexOf(currentPos) - 1]).children.length;
+
+        if(targetStoneColor != 's') {
+            deleteStone(document.getElementById(positions[positions.indexOf(currentPos) - 1]).children[0].id);
+            deleteStonePos(document.getElementById(positions[positions.indexOf(currentPos)]).id);
+            addStone(stoneId, targetPos);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    // left side white
+    else if(stoneId[0] == 'w' && (posLenght == 2 || posLenght == 0) && indexLenght == -2 && targetStone != 0) {
+        targetStoneColor = document.getElementById(positions[positions.indexOf(currentPos) - 1]).children[0].id[0];
+        targetStone = document.getElementById(positions[positions.indexOf(currentPos) - 1]).children.length;
+
+        if(targetStoneColor != 'w') {
+            deleteStone(document.getElementById(positions[positions.indexOf(currentPos) - 1]).children[0].id);
+            deleteStonePos(document.getElementById(positions[positions.indexOf(currentPos)]).id);
+            addStone(stoneId, targetPos);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    // right side black
+    else if(stoneId[0] == 's' && (posLenght == 2 || posLenght == 0) && indexLenght == 2 && targetStone != 0) {
+        targetStoneColor = document.getElementById(positions[positions.indexOf(currentPos) + 1]).children[0].id[0];
+        targetStone = document.getElementById(positions[positions.indexOf(currentPos) + 1]).children.length;
+
+        if(targetStoneColor != 's') {
+            deleteStone(document.getElementById(positions[positions.indexOf(currentPos) + 1]).children[0].id);
+            deleteStonePos(document.getElementById(positions[positions.indexOf(currentPos)]).id);
+            addStone(stoneId, targetPos);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    // right side white
+    else if(stoneId[0] == 'w' && (posLenght == 2 || posLenght == 0) && indexLenght == 2 && targetStone != 0) {
+        targetStoneColor = document.getElementById(positions[positions.indexOf(currentPos) + 1]).children[0].id[0];
+        targetStone = document.getElementById(positions[positions.indexOf(currentPos) + 1]).children.length;
+
+        if(targetStoneColor != 'w') {
+            deleteStone(document.getElementById(positions[positions.indexOf(currentPos) + 1]).children[0].id);
+            deleteStonePos(document.getElementById(positions[positions.indexOf(currentPos)]).id);
+            addStone(stoneId, targetPos);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+}
+
+function stoneMove(stoneId, targetPos) {
+    let sPI = findIndex(stoneId);  
+    let parentStr = document.getElementById(stoneId).parentElement.id;
+    let targetPosIndex = positions.indexOf(targetPos);
+
+    if(stoneId[0] == 's' && parentStr[1] == 8 && (parentStr[0] == 'a' || parentStr[0] == 'b' || parentStr[0] == 'c' || parentStr[0] == 'd')) {
+
+        if(targetPosIndex == sPI - 1 || targetPosIndex == sPI - 8) {
+            console.log("oynar1");
+            deleteStone(stoneId);
+            addStone(stoneId, selectedItems[1]);
+            jokerStone(stoneId);
+        }
+        else if(eatStone(stoneId, parentStr, selectedItems[1])) {
+            addStone(stoneId, selectedItems[1]);
+            console.log(selectedItems[1]);
+            jokerStone(stoneId);
+        }
+        else {
+            console.log("oynamaz1");
+        }
+    }
+    else if(stoneId[0] == 's' && parentStr[1] == 1 && (parentStr[0] == 'a' || parentStr[0] == 'b' || parentStr[0] == 'c' || parentStr[0] == 'd')) {
+
+        if(targetPosIndex == sPI + 1 || targetPosIndex == sPI - 8) {
+            console.log("oynar2");
+            deleteStone(stoneId);
+            addStone(stoneId, selectedItems[1]);
+            jokerStone(stoneId);
+        }
+        else if(eatStone(stoneId, parentStr, selectedItems[1])) {
+            addStone(stoneId, selectedItems[1]);
+            console.log(selectedItems[1]);
+            jokerStone(stoneId);
+        }    
+        else {
+            console.log("oynamaz2");
+        }
+    }
+    else if(stoneId[0] == 's' && parentStr[1] == 8 && (parentStr[0] == 'e' || parentStr[0] == 'f' || parentStr[0] == 'g' || parentStr[0] == 'h')) {
+        // tahtatın sağ köşesi taş başlangıç pozisyonlarına geçmeyi sağlayan kod parçası
+        if(targetPosIndex == sPI - 1 || targetPosIndex == sPI - 8) {
+            console.log("oynar4"); 
+            deleteStone(stoneId);
+            addStone(stoneId, selectedItems[1]);
+            jokerStone(stoneId);
+        }
+        else if(eatStone(stoneId, parentStr, selectedItems[1])) {
+            addStone(stoneId, selectedItems[1]);
+            console.log(selectedItems[1]);
+            jokerStone(stoneId);
+        }    
+        else {
+            console.log("oynamaz4");
+        }
+    }
+    else if(stoneId[0] == 'w' && parentStr[1] == 8 && (parentStr[0] == 'e' || parentStr[0] == 'f' || parentStr[0] == 'g' || parentStr[0] == 'h')) {
+        // tahtatın sağ köşesi taş başlangıç pozisyonlarına geçmeyi sağlayan kod parçası
+        if(targetPosIndex == sPI - 1 || targetPosIndex == sPI + 8) {
+            console.log("oynar4"); 
+            deleteStone(stoneId);
+            addStone(stoneId, selectedItems[1]);
+            jokerStone(stoneId);
+        }
+        else if(eatStone(stoneId, parentStr, selectedItems[1])) {
+            addStone(stoneId, selectedItems[1]);
+            console.log(selectedItems[1]);
+            jokerStone(stoneId);
+        }    
+        else {
+            console.log("oynamaz4");
+        }
+    }
+    else if(stoneId[0] == 'w' && parentStr[1] == 1 && (parentStr[0] == 'e' || parentStr[0] == 'f' || parentStr[0] == 'g' || parentStr[0] == 'h')) {
+
+        if(targetPosIndex == sPI + 1 || targetPosIndex == sPI + 8) {
+            console.log("oynar5"); 
+            deleteStone(stoneId);
+            addStone(stoneId, selectedItems[1]);
+            jokerStone(stoneId);
+        }
+        else if(eatStone(stoneId, parentStr, selectedItems[1])) {
+            addStone(stoneId, selectedItems[1]);
+            console.log(selectedItems[1]);
+            jokerStone(stoneId);
+        }    
+        else {
+            console.log("oynamaz5");
+        }
+    }
+    else if(stoneId[0] == 'w') {
+
+        if(targetPosIndex == sPI - 1 || targetPosIndex == sPI + 8 || targetPosIndex == sPI + 1) {
+            console.log("oynar3");
+            deleteStone(stoneId);
+            addStone(stoneId, selectedItems[1]);
+            jokerStone(stoneId);
+        }
+        else if(eatStone(stoneId, parentStr, selectedItems[1])) {
+            addStone(stoneId, selectedItems[1]);
+            console.log(selectedItems[1]);
+            jokerStone(stoneId);
+        }
+        else {
+            console.log("oynamaz3");
+        }    
+    }
+    else if(stoneId[0] == 's') {
+
+        if(targetPosIndex == sPI - 1 || targetPosIndex == sPI - 8 || targetPosIndex == sPI + 1) {
+            console.log("oynar3");
+            deleteStone(stoneId);
+            addStone(stoneId, selectedItems[1]);  
+            jokerStone(stoneId); 
+        }
+        else if(eatStone(stoneId, parentStr, selectedItems[1])) {
+            addStone(stoneId, selectedItems[1]);
+            console.log(selectedItems[1]);
+            jokerStone(stoneId);
+        }
+        else {
+            console.log("oynamaz3");
+        }    
+    }
+}
+
+function changeBorderColor(stoneId) {
+    document.getElementById(stoneId).style.borderColor = "green";
+}
+
+function returnDeafultBorderColor(stoneId) {
+    if(stoneId[0] == 's') {
+        document.getElementById(stoneId).style.borderColor = "black";
+    }
+    else {
+        document.getElementById(stoneId).style.borderColor = "white";
+    }
+}
+
+// 1 taş seçili ve o taş değiştirilmek isteniyorsa üstüne bir kez daha basmak gerekir
+function clicks() {
+    let el = document.getElementById("table").children;
+    let s = 0;
+
+    for(let i = 0; i < el.length; i ++) {
+        el[i].addEventListener("click", function(){
+            
+            if(el[i].children.length != 0) {
+                // stoneMove() fonksiyonun ilk parametresini selectedItems arrayinin ilk elemanı olarak atıyoruz
+                if(s == 0) {    
+                    selectedItems[0] = el[i].children[0].id;
+                    s += 1;
+                    changeBorderColor(selectedItems[0]);
+                    console.log("girdi " + selectedItems[0]);
+                }
+                else if(el[i].children[0].id == selectedItems[0]) {
+                    // aynı taş üst üste ikinci kez seçilirse selectedItems arrayı boşaltılır
+                    console.log("boşaltıldı " + selectedItems);
+                    returnDeafultBorderColor(selectedItems[0]);
+                    s = 0;
+                }
+            }
+            else if(el[i].children.length == 0 && s == 1) {  
+                // stoneMove() fonksiyonun ikinci parametresini selectedItems arrayinin ikinci elemanı olarak atıyoruz
+                selectedItems[1] = el[i].id;
+                returnDeafultBorderColor(selectedItems[0]);
+                stoneMove(selectedItems[0], selectedItems[1]);
+                s = 0;
+            }
+        });
+    }
+}
+clicks();

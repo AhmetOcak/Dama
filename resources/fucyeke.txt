@@ -1,0 +1,28 @@
+if((targetId[0] != stonePos[0]) && (targetId[1] == stonePos[1])) {
+        for(let i = 0; i < chars.length; i ++) {
+            if(document.getElementById(chars[i] + targetPos[1]).children.length == 0) {
+                console.log("oynar");
+            }
+            else {
+                console.log("oynamaz");
+                let currentPos = document.getElementById(chars[i] + targetPos[1]).id;
+                
+                if(document.getElementById(chars[i + 1] + targetPos[1]).children.length == 1) {
+                    console.log(chars[i] + targetPos[1]);
+                    if(document.getElementById(chars[i - 1] + targetPos[1]).children.length == 1) {
+                        console.log("taş yenmez " + chars[i] + targetPos[1]);
+                    }
+                    else if(document.getElementById(chars[i + 2] + targetPos[1]).children.length = 1) {
+                        console.log("taş yenmez " + chars[i] + targetPos[1]);
+                    }
+                    else {
+                        console.log(chars[i] + targetPos[1]);
+                        console.log("taş yenilebilir " + chars[i + 1] + targetPos[1]);
+                    }
+                }
+                else {
+                    console.log("taş yenemez");
+                }
+            }
+        }
+    }

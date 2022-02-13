@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Ahmet Ocak">
+    <meta name="description" content="Draughts"> 
+    <link rel="stylesheet" href="style.css">
+    <title>Draughts</title>
+</head>
+<body>
+    
+    <div class="gametable">
+        <div id="table">
+            <!-- h section -->
+            <div id="h1"></div>
+            <div id="h2"></div>
+            <div id="h3"></div>
+            <div id="h4"></div>
+            <div id="h5"></div>
+            <div id="h6"></div>
+            <div id="h7"></div>
+            <div id="h8"></div>
+            <!-- g section -->
+            <div id="g1"></div>
+            <div id="g2"></div>
+            <div id="g3"></div>
+            <div id="g4"></div>
+            <div id="g5"></div>
+            <div id="g6"></div>
+            <div id="g7"></div>
+            <div id="g8"></div>
+            <!-- f section -->
+            <div id="f1"></div>
+            <div id="f2"></div>
+            <div id="f3"></div>
+            <div id="f4"></div>
+            <div id="f5"></div>
+            <div id="f6"></div>
+            <div id="f7"></div>
+            <div id="f8"></div>
+            <!-- e section -->
+            <div id="e1"></div>
+            <div id="e2"></div>
+            <div id="e3"></div>
+            <div id="e4"></div>
+            <div id="e5"></div>
+            <div id="e6"></div>
+            <div id="e7"></div>
+            <div id="e8"></div>
+            <!-- d section -->
+            <div id="d1"></div>
+            <div id="d2"></div>
+            <div id="d3"></div>
+            <div id="d4"></div>
+            <div id="d5"></div>
+            <div id="d6"></div>
+            <div id="d7"></div>
+            <div id="d8"></div>
+            <!-- c section -->
+            <div id="c1"></div>
+            <div id="c2"></div>
+            <div id="c3"></div>
+            <div id="c4"></div>
+            <div id="c5"></div>
+            <div id="c6"></div>
+            <div id="c7"></div>
+            <div id="c8"></div>
+            <!-- b section -->
+            <div id="b1"></div>
+            <div id="b2"></div>
+            <div id="b3"></div>
+            <div id="b4"></div>
+            <div id="b5"></div>
+            <div id="b6"></div>
+            <div id="b7"></div>
+            <div id="b8"></div>
+            <!-- a section -->
+            <div id="a1"></div>
+            <div id="a2"></div>
+            <div id="a3"></div>
+            <div id="a4"></div>
+            <div id="a5"></div>
+            <div id="a6"></div>
+            <div id="a7"></div>
+            <div id="a8"></div>
+        </div>
+    </div>
+
+    <div class="stones" style="display: none;">
+        <!-- Black Stones -->
+        <div id="s1" class="black-stones"></div>
+        <div id="s2" class="black-stones"></div>
+        <div id="s3" class="black-stones"></div>
+        <div id="s4" class="black-stones"></div>
+        <div id="s5" class="black-stones"></div>
+        <div id="s6" class="black-stones"></div>
+        <div id="s7" class="black-stones"></div>
+        <div id="s8" class="black-stones"></div>
+        <div id="s9" class="black-stones"></div>
+        <div id="s10" class="black-stones"></div>
+        <div id="s11" class="black-stones"></div>
+        <div id="s12" class="black-stones"></div>
+        <div id="s13" class="black-stones"></div>
+        <div id="s14" class="black-stones"></div>
+        <div id="s15" class="black-stones"></div>
+        <div id="s16" class="black-stones"></div>
+        <!-- White Stones -->
+        <div id="w1" class="white-stones"></div>
+        <div id="w2" class="white-stones"></div>
+        <div id="w3" class="white-stones"></div>
+        <div id="w4" class="white-stones"></div>
+        <div id="w5" class="white-stones"></div>
+        <div id="w6" class="white-stones"></div>
+        <div id="w7" class="white-stones"></div>
+        <div id="w8" class="white-stones"></div>
+        <div id="w9" class="white-stones"></div>
+        <div id="w10" class="white-stones"></div>
+        <div id="w11" class="white-stones"></div>
+        <div id="w12" class="white-stones"></div>
+        <div id="w13" class="white-stones"></div>
+        <div id="w14" class="white-stones"></div>
+        <div id="w15" class="white-stones"></div>
+        <div id="w16" class="white-stones"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

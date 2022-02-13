@@ -1,0 +1,37 @@
+
+// forward
+    if(posLenght == 2 && indexLenght == 16) {
+        if(document.getElementById(positions[positions.indexOf(currentPos) + 8]).children.length == 0) {
+            console.log("boş");
+            return false;
+        }
+        else if(stoneId.id[0] != document.getElementById(positions[positions.indexOf(currentPos) + 8]).children[0].id[0]) {
+            deleteStone(document.getElementById(positions[positions.indexOf(currentPos) + 8]).children[0].id);
+            //deleteStone(document.getElementById(currentPos).children[0].id);
+            addStone(stoneId, targetPos);
+            return true;
+            document.getElementById(targetPos).style.backgroundColor = "green";
+        }
+        else {
+            console.log("ERROR");
+            return false;
+        }
+    }
+    // left
+    else if(posLenght == 2 && indexLenght == 2 && (stoneId.id[0] != document.getElementById(positions[positions.indexOf(currentPos) + 1]).children[0].id[0])) {
+        deleteStone(document.getElementById(positions[positions.indexOf(currentPos) + 1]).children[0].id);
+        //deleteStone(document.getElementById(currentPos).children[0].id);
+        addStone(stoneId, targetPos);
+        return true;
+    }
+    // right
+    else if(posLenght == 2 && indexLenght == -2 && (stoneId.id[0] != document.getElementById(positions[positions.indexOf(currentPos - 1)]).children[0].id[0])) {
+        deleteStone(document.getElementById(positions[positions.indexOf(currentPos - 1)]).children[0].id);
+        //deleteStone(document.getElementById(currentPos).children[0].id);
+        addStone(stoneId, targetPos);
+        return true;
+    }
+    else {
+        console.log("yemez");
+        return false;
+    }
