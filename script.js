@@ -109,13 +109,7 @@ function jokerStnForwardControl(stoneId, firstStop, targetPos) {
     }
     return true;
 }
-/*
-if(currentPosIndex(positions.indexOf(currentPos) + 32) && document.getElementById(positions[positions.indexOf(currentPos) + 24]).children.length != 0 &&
-    document.getElementById(positions[positions.indexOf(currentPos) + 32]).children.length == 0) {
-    w = 0;
-}
 
-*/
 // jokerStoneMove control function forward
 function jokerStnBackControl(stoneId, firstStop, targetPos) {
     if(stoneId[0] == 'w') {
@@ -1412,8 +1406,6 @@ function clicks() {
         });
     }
 }
-
-
 
 startPosition();
 clicks();
