@@ -1,4 +1,4 @@
-# Dama
+# Dama 🎲
 
 12.09.2021 tarihinde yaptım.
 
