@@ -1,4 +1,5 @@
-# Dama 🎲
+# Dama  <span> </span>  <img src="https://user-images.githubusercontent.com/73544434/172840788-1e1430d8-3824-4f14-bb29-b8f00ab2f4b8.png" width="24" height="24"/>
+
 
 12.09.2021 tarihinde yaptım.
 
